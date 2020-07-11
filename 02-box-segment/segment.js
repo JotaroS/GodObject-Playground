@@ -3,7 +3,9 @@
 // MIT License
 
 class Segment{
-    //line parametrized expression: y = ax + b;
+    //line parametrized expression:
+    // $ y = mx + n $
+    // $ ax + by +c = 0 where a > 0 $
     constructor(_x1, _y1, _x2, _y2){
         this.x1 = _x1;
         this.y1 = _y1;
@@ -64,17 +66,37 @@ class Segment{
     }
 
     getNormal(){
-        return createVector(this.x2-this.x1, this.y2-this.y1).rotate(-HALF_PI);
+        return createVector(this.x2-this.x1, this.y2-this.y1).rotate(-HALF_PI).normalize();
     }
 
     magnitude(){
-        return Math.sqrt()
+        let dx = this.x1-this.x2;
+        let dy = this.y1-this.y2;
+        return Math.sqrt(dx*dx+dy*dy);
     }
 
-    draw(){
+    getPoint(idx){
+        if(idx==0)return createVector(this.x1, this.y1);
+        else return createVector(this.x2, this.y2);
+    }
+
+    draw(flag=false){
         strokeWeight(2);
+
+        if(flag){
+            let vec = this.getNormal().rotate(HALF_PI).mult(1000000);
+            stroke(200);
+            line(this.x1, this.y1, this.x1+vec.x, this.y1+vec.y);
+            vec.rotate(PI);
+            line(this.x1, this.y1, vec.x, vec.y);
+
+        }
+
         if(this.isActive)stroke(0,0,255);
         else stroke(0);
         line(this.x1, this.y1, this.x2, this.y2);
+    }
+    toString(){
+        return "seg:("+this.x1+","+this.y1+","+this.x2+","+this.y2+")";
     }
 }

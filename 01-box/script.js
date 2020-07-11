@@ -1,3 +1,4 @@
+
 radius = 10;
 
 function setup() {
@@ -32,8 +33,8 @@ function calculateCollisionPoint() {
     } else return createVector(mouseX, mouseY);
 }
 
-function calculateForce(pointOfCollision, pointOfMeHandle) {
-    let errVector = pointOfCollision.sub(pointOfMeHandle);
+function calculateForce(godObjectPosition, pointOfMeHandle) {
+    let errVector = godObjectPosition.sub(pointOfMeHandle);
     let forceVector = errVector.mult(2.0);
     return forceVector;
 }
@@ -63,19 +64,19 @@ function draw() {
     stroke(0);
     fill(200);
     rect(0, height / 2, width / 2, height / 2);
-    let pointOfCollision = calculateCollisionPoint();
+    let godObjectPosition = calculateCollisionPoint();
     fill(0, 0, 255); // point of collision
-    ellipse(pointOfCollision.x, pointOfCollision.y, radius, radius);
+    ellipse(godObjectPosition.x, godObjectPosition.y, radius, radius);
     fill(0, 255, 0); // me handle position
     ellipse(mouseX, mouseY, radius, radius);
     strokeWeight(2);
 
     // 
     stroke(150);
-    line(mouseX, mouseY, pointOfCollision.x, pointOfCollision.y);
+    line(mouseX, mouseY, godObjectPosition.x, godObjectPosition.y);
 
-    let forceVector = calculateForce(createVector(pointOfCollision.x, pointOfCollision.y), createVector(mouseX, mouseY));
-    drawForce(pointOfCollision.x, pointOfCollision.y, pointOfCollision.x + forceVector.x, pointOfCollision.y + forceVector.y);
+    let forceVector = calculateForce(createVector(godObjectPosition.x, godObjectPosition.y), createVector(mouseX, mouseY));
+    drawForce(godObjectPosition.x, godObjectPosition.y, godObjectPosition.x + forceVector.x, godObjectPosition.y + forceVector.y);
     prevMouseX = mouseX;
     prevMouseY = mouseY;
 }

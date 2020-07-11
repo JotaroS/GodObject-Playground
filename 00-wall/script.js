@@ -4,16 +4,27 @@ function setup() {
 }
 
 function calculateCollisionPoint(){
-    //wallY is set to windowHeight / 2;
-    //logic:
-    //  pointOfCollision.x = mouseX
-    //  pointOfCollision.y = if(mouseY < wallY)then mouseY. else...
-    const topWallY = height / 2;
-    pointOfCollision = createVector(mouseX, min(mouseY, topWallY));
-    return pointOfCollision;
+    //TODO: let's build a wall logic.
+    // godObjectPosition should stay on the wall in the middle of screen.
+    // you need to set godObjectPosition.x so that it stops on the center to the right.
+    // variables:
+    // wallX : position of boundary of the wall.
+    // meHandle : P5.vector object. position of me handle == mouse.
+
+    const wallX = width / 2;
+    const meHandle = createVector(mouseX,mouseY);
+    godObjectPosition = createVector();
+    if(meHandle.x < wallX){ //if meHandle is out of wall,
+        // godObjectPosition.x = ???;
+    }
+    else{ // if me handle is in the wall
+        // godObjectPosition.x = ???;
+    }
+    godObjectPosition.y = meHandle.y;
+    return godObjectPosition;
 }
-function calculateForce(pointOfCollision, pointOfMeHandle){
-    let errVector = pointOfCollision.sub(pointOfMeHandle);
+function calculateForce(godObjectPosition, pointOfMeHandle){
+    let errVector = godObjectPosition.sub(pointOfMeHandle);
     let forceVector = errVector.mult(2.0);
     return forceVector;
 }
@@ -38,18 +49,18 @@ function draw() {
     strokeWeight(0)
     stroke(0);
     fill(200);
-    rect(0, width/2, width, height/2);
-    let pointOfCollision = calculateCollisionPoint();
+    rect(width/2, 0, width, height);
+    let godObjectPosition = calculateCollisionPoint();
     fill(0, 0, 255); // point of collision
-    ellipse(pointOfCollision.x, pointOfCollision.y, radius, radius);    
+    ellipse(godObjectPosition.x, godObjectPosition.y, radius, radius);    
     fill(0,255,0); // me handle position
     ellipse(mouseX, mouseY, radius, radius);
     strokeWeight(2);
 
     // 
     stroke(150);
-    line(mouseX, mouseY, pointOfCollision.x, pointOfCollision.y);
+    line(mouseX, mouseY, godObjectPosition.x, godObjectPosition.y);
 
-    let forceVector = calculateForce(createVector(pointOfCollision.x, pointOfCollision.y), createVector(mouseX, mouseY));
-    drawForce(pointOfCollision.x, pointOfCollision.y, pointOfCollision.x+forceVector.x, pointOfCollision.y+forceVector.y);
+    let forceVector = calculateForce(createVector(godObjectPosition.x, godObjectPosition.y), createVector(mouseX, mouseY));
+    drawForce(godObjectPosition.x, godObjectPosition.y, godObjectPosition.x+forceVector.x, godObjectPosition.y+forceVector.y);
 }

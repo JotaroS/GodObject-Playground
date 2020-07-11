@@ -38,6 +38,10 @@ class Segment{
         return(this._f(this.p1, this.p2, p)<=0.0);
     }
 
+    isPointInsideOfSegment(p){
+        return !this.isPointOutOfSegment(p);
+    }
+
     isIntersecting(otherSegment){
         let p1 = this.p1;
         let p2 = this.p2;
@@ -85,7 +89,7 @@ class Segment{
 
         if(flag){
             let vec = this.getNormal().rotate(HALF_PI).mult(1000000);
-            stroke(200);
+            stroke(180);
             line(this.x1, this.y1, this.x1+vec.x, this.y1+vec.y);
             vec.rotate(PI);
             line(this.x1, this.y1, vec.x, vec.y);
