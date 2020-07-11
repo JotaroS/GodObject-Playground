@@ -1,4 +1,4 @@
-#　god obejct playground
+# god obejct playground
 
 Author: jotaro shigeyama
 
