@@ -20,7 +20,7 @@ function collisionDetection(segments){
         mouseSegment = new Segment(mouseX, mouseY, prevMouseX, prevMouseY);
         // TODO: 
         // activate segment if mouse Segment intersects.
-        // variables:
+        // variables and functions:::
         // segment: Segment object. edges of object in the scene
         // mouseSegment: Segment object made from current and previous mouse position.
         // Segment.setActive(bool ): set segment as active/inactive

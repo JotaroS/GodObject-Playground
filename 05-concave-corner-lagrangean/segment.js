@@ -35,7 +35,7 @@ class Segment{
     }
 
     isPointOutOfSegment(p){
-        return(this._f(this.p1, this.p2, p)<=0.0);
+        return(this._f(this.p1, this.p2, p)<=0.0010);
     }
 
     isIntersecting(otherSegment){

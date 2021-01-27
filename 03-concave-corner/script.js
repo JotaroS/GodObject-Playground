@@ -37,14 +37,17 @@ function collisionUpdate(segments, objectPoint){
     }
 }
 
-function updateCollisionPoint(godObjectPosition){
-    let cornerPoint = createVector(width/2, height/2);
+function updateCollisionPoint(pos){
+    let cornerPoint = createVector(width/2, height/2)
+    let godObjectPosition = pos;
     mouseVector = createVector(mouseX, mouseY);
     // TODO: set collisionPoint to the corner
+    
+    
     if(s1.isPointInsideOfSegment(mouseVector) && s2.isPointInsideOfSegment(mouseVector)){
-        return cornerPoint;
+        godObjectPosition = cornerPoint;
     }
-    else return godObjectPosition;
+    return godObjectPosition;
 }
 
 function calculateCollisionPoint(segment){
