@@ -11,8 +11,8 @@ function setup() {
     s2 = new Segment(400 / 2, 350, 400, 600 / 2);
 
     // UNCOMMENT HERE TO SEE DIFFERENT GEOMETRY
-    // s1 = new Segment(0,400 / 2, 400 / 2, 400 / 2);
-    // s2 = new Segment(400 / 2, 400 / 2,400, 400);
+    s1 = new Segment(0,400 / 2, 400 / 2, 400 / 2);
+    s2 = new Segment(400 / 2, 400 / 2,400, 400);
 
 }
 
