@@ -1,4 +1,5 @@
 radius = 10;
+debugMessage = "";
 function setup() {
     createCanvas(400, 400);
 }
@@ -21,6 +22,8 @@ function calculateCollisionPoint(){
         // godObjectPosition.x = ???;
     }
     godObjectPosition.y = meHandle.y;
+
+    debugMessage = "godObjectPosition.x = " + godObjectPosition.x;
     return godObjectPosition;
 }
 function calculateForce(godObjectPosition, pointOfMeHandle){
@@ -40,6 +43,12 @@ function drawForce(sx, sy, tx, ty){
     line(tx, ty, tx+arrayVector.x, ty+arrayVector.y);
     arrayVector.rotate(+HALF_PI*1.5*2);
     line(tx, ty, tx+arrayVector.x, ty+arrayVector.y);
+}
+
+function drawDebugMessage(){
+    fill(0);
+    strokeWeight(0);
+    text(debugMessage, 10, 390);
 }
 
 function draw() {
@@ -63,4 +72,6 @@ function draw() {
 
     let forceVector = calculateForce(createVector(godObjectPosition.x, godObjectPosition.y), createVector(mouseX, mouseY));
     drawForce(godObjectPosition.x, godObjectPosition.y, godObjectPosition.x+forceVector.x, godObjectPosition.y+forceVector.y);
+
+    drawDebugMessage();
 }

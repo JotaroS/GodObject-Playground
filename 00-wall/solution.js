@@ -21,12 +21,20 @@ function calculateCollisionPoint(){
         godObjectPosition.x = wallX;
     }
     godObjectPosition.y = meHandle.y;
+
+    debugMessage = "godObjectPosition.x = " + godObjectPosition.x;
     return godObjectPosition;
 }
 function calculateForce(godObjectPosition, pointOfMeHandle){
     let errVector = godObjectPosition.sub(pointOfMeHandle);
     let forceVector = errVector.mult(2.0);
     return forceVector;
+}
+
+function drawDebugMessage(){
+    fill(0);
+    strokeWeight(0);
+    text(debugMessage, 10, 390);
 }
 
 function drawForce(sx, sy, tx, ty){
@@ -63,4 +71,5 @@ function draw() {
 
     let forceVector = calculateForce(createVector(godObjectPosition.x, godObjectPosition.y), createVector(mouseX, mouseY));
     drawForce(godObjectPosition.x, godObjectPosition.y, godObjectPosition.x+forceVector.x, godObjectPosition.y+forceVector.y);
+    drawDebugMessage();
 }

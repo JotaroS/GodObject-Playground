@@ -126,7 +126,8 @@ function draw() {
         if(s2.isPointOutOfSegment(e1)) godObjectPosition =e1;
         else if (s1.isPointOutOfSegment(e2)) godObjectPosition = e2;
         //if above candidates doesn't meet the condition, then use the intersection point.
-        else godObjectPosition = intersectionPoint;
+        godObjectPosition = intersectionPoint;
+        console.log(x);
     }
 
     strokeWeight(0);

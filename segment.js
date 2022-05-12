@@ -34,8 +34,16 @@ class Segment{
         return (p2.x - p1.x) * (p3.y - p1.y) - (p2.y - p1.y) * (p3.x - p1.x)
     }
 
+    eval(p){
+        return this.a*p.x + this.b*p.y + this.c;
+    }
+
+    // eval(x, y){
+    //     return this.a*x + this.b*y + this.c;
+    // }
+
     isPointOutOfSegment(p){
-        return(this._f(this.p1, this.p2, p)<=0.0);
+        return(this._f(this.p1, this.p2, p)<=0.0010);
     }
 
     isIntersecting(otherSegment){

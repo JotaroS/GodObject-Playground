@@ -25,9 +25,12 @@ function collisionDetection(segments){
         // mouseSegment: Segment object made from current and previous mouse position.
         // Segment.setActive(bool ): set segment as active/inactive
         // Segment.isIntersecting(Segment ):
+
+        let mouseP = createVector(mouseX, mouseY);
+        let prevMouseP = createVector(prevMouseX, prevMouseY);
         
         // uncomment/code below!
-        if(segment.isIntersecting(mouseSegment)){
+        if(segment.isIntersecting(mouseSegment) && segment.eval(mouseP)<=0 && segment.eval(prevMouseP)>0){
             segment.setActive(true);
         }
     }
