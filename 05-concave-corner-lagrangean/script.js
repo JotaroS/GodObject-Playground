@@ -10,8 +10,8 @@ function setup() {
     s1 = new Segment(0, 200 / 2, 400 / 2, 350);
     s2 = new Segment(400 / 2, 350, 400, 200 / 2);
 
-    // UNCOMMENT HERE TO SEE DIFFERENT GEOMETRY
-    // s1 = new Segment(0,400 / 2, 400 / 2, 400 / 2);
+    // // UNCOMMENT HERE TO SEE DIFFERENT GEOMETRY
+    // s1 = new Segment(0, 400 / 2, 400 / 2, 400 / 2);
     // s2 = new Segment(400 / 2, 400 / 2,400, 400);
 
 }
@@ -41,7 +41,7 @@ function collisionUpdate(segments, objectPoint) {
 function calculateCollisionPoint(segment) {
     mouseVector = createVector(mouseX, mouseY);
     let d = segment.distanceTo(mouseVector);
-    let mouseToCollisionPoint = segment.getNormal().mult(d);
+    let mouseToCollisionPoint = segment.getNormal().mult((segment.eval(mouseVector)>0)?-d:d);
     let collisionPoint = mouseVector.add(mouseToCollisionPoint);
     return collisionPoint;
 }
@@ -104,7 +104,14 @@ function draw() {
         //calculate candidate point of the god objects
         e1 = calculateCollisionPoint(s1);
         e2 = calculateCollisionPoint(s2);
-        
+
+        strokeWeight(0);
+        fill(200); // point of collision
+        ellipse(e1.x, e1.y, radius2, radius2);
+        strokeWeight(0);
+        fill(200); // point of collision
+        ellipse(e2.x, e2.y, radius2, radius2);
+            
         let mouseVector = createVector(mouseX, mouseY);
 
         // intersection of the lines. calculating best concave position using lagrangean multiplier
@@ -113,21 +120,38 @@ function draw() {
         const b1 = s1.b, b2 = s2.b;
         const c1 = s1.c, c2 = s2.c;
         const A = [
-            [1,0,a1,a2],   // matrix to solve
-            [0,1,b1,b2],
-            [a1,b1,0,0],
-            [a2,b2,0,0]
+            [a1,b1],
+            [a2,b2]
         ]
-        const b = [mouseVector.x, mouseVector.y, -c1, -c2]; //vector to solve
+        const b = [-c1, -c2]; //vector to solve
         const x = math.lusolve(A,b); // solution
         //this point gives the intersection of tthe lines.
         intersectionPoint = createVector(x[0][0], x[1][0]);
-        //if one of the candidates are 'outside' of the object, then save the point.
-        if(s2.isPointOutOfSegment(e1)) godObjectPosition =e1;
-        else if (s1.isPointOutOfSegment(e2)) godObjectPosition = e2;
-        //if above candidates doesn't meet the condition, then use the intersection point.
         godObjectPosition = intersectionPoint;
-        console.log(x);
+        // for(e of [e1, e2]){
+        //     if(s1.eval(e)< -0.01||s2.eval(e)< -0.01){
+        //     }
+        //     else{
+        //         godObjectPosition = e;
+        //         break;
+        //     }
+        // }
+        let candidates = [intersectionPoint];
+        for(e of [e1, e2]){
+            if(s1.eval(e)< -0.01||s2.eval(e)< -0.01){
+            }
+            else{
+                candidates.push(e);
+            }
+        }
+        let maxdist = 100000;
+        for(c of candidates){
+            d = createVector(mouseX-c.x,mouseY, c.y).mag();
+            if(d < maxdist){
+                godObjectPosition = c;
+                maxdist = d;
+            }
+        }
     }
 
     strokeWeight(0);

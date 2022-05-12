@@ -90,25 +90,24 @@ function draw() {
     }
     
     // is still colliding? (calculated god object above might be already out of segment)
-    let currentActiveSegment = s1;
     let reJudgeFlag = false;
     for(let s of segments){
         if(s.isActive){
             // this small vector is needed somehow to avoid numerical error...
-            let epsilon = createVector(godObjectPosition.x-mouseX, godObjectPosition.y-mouseY).normalize().mult(2);
+            let epsilon = createVector(godObjectPosition.x-mouseX, godObjectPosition.y-mouseY).normalize().mult(0.01);
             let mouseCollisionSegment = new Segment(mouseX, mouseY, godObjectPosition.x+epsilon.x, godObjectPosition.y+epsilon.y);
             if(s.isIntersecting(mouseCollisionSegment)==false){
-                s.setActive(s.isIntersecting(mouseCollisionSegment));
-                reJudgeFlag = true;
+                s.setActive(false);
+                collisionUpdate(segments, godObjectPosition);
                 break;
             }
         }
     }
-    // if the segment is off during dragging, we need to recalculate another collision.
+    // // if the segment is off during dragging, we need to recalculate another collision.
     if(reJudgeFlag){
-        activeSegment = currentActiveSegment;
+        // activeSegment = currentActiveSegment;
         collisionUpdate(segments, godObjectPosition);
-        godObjectPosition = calculateCollisionPoint(currentActiveSegment);
+        // godObjectPosition = calculateCollisionPoint(activeSegment);
     }
 
     strokeWeight(0);

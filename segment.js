@@ -38,10 +38,6 @@ class Segment{
         return this.a*p.x + this.b*p.y + this.c;
     }
 
-    // eval(x, y){
-    //     return this.a*x + this.b*y + this.c;
-    // }
-
     isPointOutOfSegment(p){
         return(this._f(this.p1, this.p2, p)<=0.0010);
     }
@@ -57,7 +53,22 @@ class Segment{
         let t3 = this._f(p3, p4, p1);
         let t4 = this._f(p3, p4, p2);
 
-        return (t1 * t2 <= 0.0 && t3 * t4 <= 0.0);
+        return (t1 * t2 <= 0.0 && t3 * t4 <= 0.0) && (this.eval(otherSegment.p1)<0 && this.eval(otherSegment.p2)>=0);
+    }
+
+    isIntersectingInclusive(otherSegment){
+        let p1 = this.p1;
+        let p2 = this.p2;
+        let p3 = otherSegment.p1;
+        let p4 = otherSegment.p2;
+
+        p4 = p4 + (p4-p3)*0.1;
+        let t1 = this._f(p1, p2, p3);
+        let t2 = this._f(p1, p2, p4);
+        let t3 = this._f(p3, p4, p1);
+        let t4 = this._f(p3, p4, p2);
+
+        return (t1 * t2 <= 0.0 && t3 * t4 <= 0.0) && (this.eval(otherSegment.p1)<0 && this.eval(otherSegment.p2)>=0);
     }
     distanceTo(pointVector){
         let d = Math.abs(this.a * pointVector.x + this.b * pointVector.y + this.c) 
