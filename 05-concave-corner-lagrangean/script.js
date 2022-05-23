@@ -96,7 +96,6 @@ function draw() {
     }
     godObjectPosition = createVector(mouseX, mouseY);
 
-    //TODO: example code for the collision detection
     if (isSegmentActive) {
         let edgePosition;
         s1.setActive(true);s2.setActive(true);
@@ -127,31 +126,36 @@ function draw() {
         const x = math.lusolve(A,b); // solution
         //this point gives the intersection of tthe lines.
         intersectionPoint = createVector(x[0][0], x[1][0]);
-        godObjectPosition = intersectionPoint;
-        // for(e of [e1, e2]){
-        //     if(s1.eval(e)< -0.01||s2.eval(e)< -0.01){
-        //     }
-        //     else{
-        //         godObjectPosition = e;
-        //         break;
-        //     }
-        // }
+        ellipse(intersectionPoint.x, intersectionPoint.y, radius2, radius2);
+        godObjectPosition = createVector(mouseX, mouseY);
+      
         let candidates = [intersectionPoint];
         for(e of [e1, e2]){
-            if(s1.eval(e)< -0.01||s2.eval(e)< -0.01){
-            }
+            if(s1.eval(e)< -0.01||s2.eval(e)< -0.01){}
             else{
                 candidates.push(e);
             }
         }
-        let maxdist = 100000;
-        for(c of candidates){
-            d = createVector(mouseX-c.x,mouseY, c.y).mag();
-            if(d < maxdist){
-                godObjectPosition = c;
-                maxdist = d;
-            }
-        }
+      
+        // TODO: Identify a point in Vector2[] candidates that's closest to the meHandle, and assign it as the godObjectPosition.
+        // --
+        // candidates: p5.Vector[] candidate points for god object on concave corner.
+        // mouseX, mouseY: position of meHandle (=mouse) x, y position.
+        // --
+      
+        // YOUR CODE STARTS HERE
+        // let minDist = 100000;
+        // // for every candidate points:
+        // for(let candidatePoint of candidates){
+        //     // STEP 1: calcaulte distance from candidatePoint to mouseX, mouseY. Use createVector(), .mag() mouseX and mouseY.
+        //     let d = createVector(candidatePoint.x - mouseX,candidatePoint.y - mouseY).mag();
+        //     // STEP 2: if distance is smaller than minDist, then assign godObjectPosition, update minDist.
+        //     if(minDist > d){
+        //         minDist = d;
+        //         godObjectPosition = candidatePoint;
+        //     }
+        // }
+        // YOUR CODE ENDS HERE
     }
 
     strokeWeight(0);
